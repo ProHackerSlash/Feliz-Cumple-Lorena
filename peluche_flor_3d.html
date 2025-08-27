@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>¡Feliz Cumple Lorena! 🎉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg1:#ff9a9e; --bg2:#fad0c4;
+      --text:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; height:100vh; overflow:hidden;
+      background: radial-gradient(circle at 20% 20%, var(--bg1), var(--bg2));
+      display:flex; align-items:center; justify-content:center; flex-direction:column;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    .title{
+      color:var(--text); text-align:center; margin:0 16px;
+      font-weight:800; letter-spacing:.5px;
+      text-shadow: 0 4px 18px rgba(0,0,0,.25);
+      animation: popIn .8s ease-out both;
+    }
+    .title .name{ 
+      display:inline-block; 
+      background: linear-gradient(90deg,#fff,#ffe08a,#ffd1dc,#fff);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow:none;
+    }
+    .subtitle{
+      color:#fff; opacity:.95; margin-top:6px; font-size:1.05rem
+    }
+    @keyframes popIn{ from{ transform:translateY(20px) scale(.95); opacity:0 }
+                       to{   transform:translateY(0)     scale(1);    opacity:1 } }
+
+    /* Globos */
+    .balloon{
+      position:fixed; bottom:-80px; left:50%;
+      transform: translateX(-50%);
+      font-size: 42px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+      animation: floatUp linear forwards;
+      user-select:none; pointer-events:none;
+    }
+    @keyframes floatUp{
+      from{ transform:translateY(0) translateX(var(--x)) rotate(0deg); opacity:1 }
+      to{   transform:translateY(-115vh) translateX(calc(var(--x) * -1)) rotate(6deg); opacity:0.8 }
+    }
+
+    /* Confeti */
+    .confetti{
+      position:fixed; top:-10px; width:10px; height:14px; opacity:.95;
+      transform: translateY(-100px) rotate(0deg);
+      animation: fall var(--dur) linear forwards, spin var(--spin) ease-in-out infinite;
+      will-change: transform, opacity;
+      border-radius: 2px;
+    }
+    @keyframes fall{
+      to{ transform: translateY(110vh) rotate(360deg); opacity: 1; }
+    }
+    @keyframes spin{
+      0%{ transform:translateY(var(--y)) rotate(0deg) }
+      50%{ transform:translateY(calc(var(--y) + 40px)) rotate(180deg) }
+      100%{ transform:translateY(var(--y)) rotate(360deg) }
+    }
+
+    /* Botoncitos */
+    .actions{
+      position:fixed; bottom:16px; display:flex; gap:10px;
+    }
+    button{
+      background:#111827; color:#fff; border:0; border-radius:12px; padding:10px 14px;
+      font-weight:700; cursor:pointer; box-shadow: 0 8px 20px rgba(0,0,0,.25);
+      transition: transform .08s ease, opacity .2s ease;
+    }
+    button:hover{ transform: translateY(-1px) scale(1.02) }
+    button:active{ transform: translateY(0) scale(.98) }
+    .ghost{ background:#ffffff22; backdrop-filter: blur(6px); }
+  </style>
+</head>
+<body>
+  <h1 class="title" id="titulo" style="font-size:clamp(28px,6vw,56px)">
+    🎉 ¡Feliz Cumple, <span class="name" id="nombre">Amiga</span>! 🎉
+  </h1>
+  <p class="subtitle" id="sub">Que todos tus deseos se compilen sin errores 💖</p>
+
+  <div class="actions">
+    <button id="confettiBtn">🎊 Lanzar confeti</button>
+    <button id="balloonBtn" class="ghost">🎈 Soltar globos</button>
+  </div>
+
+  <script>
+    /* ======= PERSONALIZA AQUÍ ======= */
+    const NOMBRE  = "Lorena";                         // ← pon su nombre
+    const MENSAJE = "Que tu día sea increíble ✨";    // ← tu mensaje
+    const DURACION_GLOBO = 9000;                     // ms (subida de globos)
+    const INTERVALO_GLOBO = 320;                     // ms (frecuencia de globos)
+    const CANT_CONFETI = 120;                        // cantidad por ráfaga
+    /* ================================= */
+
+    nombre.textContent = NOMBRE;
+    sub.textContent = MENSAJE;
+
+    // ---- Globos (🎈 de varios colores) ----
+    const BALLOONS = ["🎈","🎈","🎈","🎈","🎈","🎈","🎈","🎈","🎈","🎈"]; // todos 🎈; colores los da el emoji
+    function crearGlobo(){
+      const el = document.createElement("div");
+      el.className = "balloon";
+      el.textContent = BALLOONS[Math.floor(Math.random()*BALLOONS.length)];
+      // desplazamiento horizontal aleatorio
+      const offset = (Math.random()*140 - 70) + "px";
+      el.style.setProperty("--x", offset);
+      el.style.left = (10 + Math.random()*80) + "vw";
+      el.style.animationDuration = (7 + Math.random()*4) + "s";
+      el.style.fontSize = (36 + Math.random()*22) + "px";
+      document.body.appendChild(el);
+      setTimeout(()=> el.remove(), DURACION_GLOBO);
+    }
+    function rachaGlobos(ms=INTERVALO_GLOBO, tiempo=3500){
+      const t = setInterval(crearGlobo, ms);
+      setTimeout(()=> clearInterval(t), tiempo);
+    }
+
+    // ---- Confeti (divs de colores cayendo) ----
+    const CONF_COLS = ["#ff6b6b","#ffd93d","#6bcBef","#b692ff","#95f29b","#ffa3cf","#fff"];
+    function lanzarConfeti(n=CANT_CONFETI){
+      for(let i=0;i<n;i++){
+        const c = document.createElement("div");
+        c.className = "confetti";
+        const size = 6 + Math.random()*8;
+        c.style.width = size + "px";
+        c.style.height = (size*1.2) + "px";
+        c.style.left = Math.random()*100 + "vw";
+        c.style.background = CONF_COLS[i%CONF_COLS.length];
+        c.style.setProperty("--dur", (6 + Math.random()*3) + "s");
+        c.style.setProperty("--spin", (1 + Math.random()*1.5) + "s");
+        c.style.setProperty("--y", (Math.random()*60 - 30) + "px");
+        c.style.opacity = .9;
+        document.body.appendChild(c);
+        setTimeout(()=> c.remove(), 10000);
+      }
+    }
+
+    // Efecto inicial
+    rachaGlobos(200, 2500);
+    setTimeout(()=>lanzarConfeti(160), 600);
+
+    // Botones
+    confettiBtn.addEventListener('click', ()=> lanzarConfeti());
+    balloonBtn.addEventListener('click', ()=> rachaGlobos());
+
+    // corazones discretos flotando (detalle bonito)
+    function corazonSuave(){
+      const h = document.createElement("div");
+      h.textContent = "💕";
+      h.style.position = "fixed";
+      h.style.fontSize = (18+Math.random()*12)+"px";
+      h.style.left = (10+Math.random()*80)+"vw";
+      h.style.top = "110vh";
+      h.style.opacity = .9;
+      h.style.filter = "drop-shadow(0 3px 6px rgba(0,0,0,.25))";
+      const dur = 5000 + Math.random()*3000;
+      const start = performance.now();
+      (function anim(t0){
+        const t = (performance.now()-start)/dur;
+        const y = 110 - t*130; // sube
+        const xWobble = Math.sin(t*6)*2;
+        h.style.transform = `translate(${xWobble}px, -${y}vh)`;
+        if(t<1) requestAnimationFrame(anim); else h.remove();
+      })();
+      document.body.appendChild(h);
+    }
+    setInterval(corazonSuave, 500);
+  </script>
+</body>
+</html>
+
