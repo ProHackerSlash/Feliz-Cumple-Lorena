@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>¡Feliz Cumple Lorena! 🎉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+    
+    :root{
+      --bg1: #667eea;
+      --bg2: #764ba2;
+      --bg3: #f093fb;
+      --text: #ffffff;
+      --accent: #ffd700;
+      --card-bg: rgba(255, 255, 255, 0.15);
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      position: relative;
+    }
+    
+    /* Fondo animado con partículas */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+      animation: floatBg 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    
+    @keyframes floatBg {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(1deg); }
+    }
+    
+    /* Contenedor principal */
+    .main-container {
+      text-align: center;
+      padding: 2rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      animation: slideIn 1s ease-out both;
+      max-width: 90vw;
+      position: relative;
+    }
+    
+    @keyframes slideIn {
+      from { 
+        transform: translateY(50px) scale(0.9);
+        opacity: 0;
+      }
+      to { 
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .title {
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.2;
+    }
+    
+    .name {
+      display: inline-block;
+      background: linear-gradient(90deg, #ffd700, #ffed4e, #fff8a3, #ffd700);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 3s ease-in-out infinite;
+      font-weight: 900;
+      text-shadow: none;
+      position: relative;
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Decoración de estrellas en el contenedor */
+    .main-container::before,
+    .main-container::after {
+      content: '✨';
+      position: absolute;
+      font-size: 1.5rem;
+      animation: twinkle 2s ease-in-out infinite alternate;
+    }
+    
+    .main-container::before {
+      top: -10px;
+      left: -10px;
+      animation-delay: 0s;
+    }
+    
+    .main-container::after {
+      bottom: -10px;
+      right: -10px;
+      animation-delay: 1s;
+    }
+    
+    @keyframes twinkle {
+      from { opacity: 0.7; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+    
+    /* Botones mejorados */
+    .actions {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+    
+    button {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    button:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+    
+    /* Globos mejorados */
+    .balloon {
+      position: fixed;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 42px;
+      filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
+      animation: floatUp linear forwards;
+      user-select: none;
+      pointer-events: none;
+      z-index: 10;
+    }
+    
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) translateX(var(--x)) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-115vh) translateX(calc(var(--x) * -1.5)) rotate(8deg);
+        opacity: 0.6;
+      }
+    }
+    
+    /* Confeti mejorado */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 12px;
+      height: 16px;
+      opacity: 0.95;
+      transform: translateY(-100px) rotate(0deg);
+      animation: 
+        fall var(--dur) linear forwards,
+        spin var(--spin) ease-in-out infinite,
+        fade var(--dur) ease-out forwards;
+      will-change: transform, opacity;
+      border-radius: 3px;
+      z-index: 20;
+    }
+    
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+    
+    @keyframes spin {
+      0% { transform: translateY(var(--y)) rotate(0deg); }
+      50% { transform: translateY(calc(var(--y) + 50px)) rotate(180deg); }
+      100% { transform: translateY(var(--y)) rotate(360deg); }
+    }
+    
+    @keyframes fade {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    /* Efectos de partículas de fondo */
+    .particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+      z-index: 1;
+    }
+    
+    @keyframes floatParticle {
+      from {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-20vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+      
+      .actions {
+        bottom: 1rem;
+        gap: 0.75rem;
+      }
+      
+      button {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h1 class="title" id="titulo">
+      🎉 ¡Feliz Cumple, <span class="name" id="nombre">Amiga</span>! 🎉
+    </h1>
+    <p class="subtitle" id="sub">Que todos tus deseos se compilen sin errores 💖</p>
+  </div>
+
+  <div class="actions">
+    <button id="confettiBtn">🎊 Lanzar confeti</button>
+    <button id="balloonBtn">🎈 Soltar globos</button>
+  </div>
+
+  <script>
+    /* ======= PERSONALIZA AQUÍ ======= */
+    const NOMBRE = "Lorena";
+    const MENSAJE = "Que tu día esté rodeado de sonrisas y de todo lo que te hace feliz ✨, te lo desea Kiara🐈";
+    const DURACION_GLOBO = 9000;
+    const INTERVALO_GLOBO = 320;
+    const CANT_CONFETI = 150;
+    /* ================================= */
+
+    document.getElementById('nombre').textContent = NOMBRE;
+    document.getElementById('sub').textContent = MENSAJE;
+
+    // ---- Globos con más variedad ----
+    const BALLOONS = ["🎈", "🎈", "🎈", "🎈", "🎈", "🎈"];
+    
+    function crearGlobo() {
+      const el = document.createElement("div");
+      el.className = "balloon";
+      el.textContent = BALLOONS[Math.floor(Math.random() * BALLOONS.length)];
+      
+      const offset = (Math.random() * 160 - 80) + "px";
+      el.style.setProperty("--x", offset);
+      el.style.left = (5 + Math.random() * 90) + "vw";
+      el.style.animationDuration = (8 + Math.random() * 5) + "s";
+      el.style.fontSize = (38 + Math.random() * 28) + "px";
+      
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), DURACION_GLOBO);
+    }
+    
+    function rachaGlobos(ms = INTERVALO_GLOBO, tiempo = 4000) {
+      const interval = setInterval(crearGlobo, ms);
+      setTimeout(() => clearInterval(interval), tiempo);
+    }
+
+    // ---- Confeti con más colores vibrantes ----
+    const CONF_COLS = [
+      "#ff6b6b", "#ffd93d", "#6bcbef", "#b692ff", 
+      "#95f29b", "#ffa3cf", "#fff", "#ff9ff3", 
+      "#54a0ff", "#5f27cd", "#ff3838", "#ffdd59"
+    ];
+    
+    function lanzarConfeti(n = CANT_CONFETI) {
+      for (let i = 0; i < n; i++) {
+        setTimeout(() => {
+          const c = document.createElement("div");
+          c.className = "confetti";
+          const size = 8 + Math.random() * 10;
+          c.style.width = size + "px";
+          c.style.height = (size * 1.4) + "px";
+          c.style.left = Math.random() * 100 + "vw";
+          c.style.background = CONF_COLS[Math.floor(Math.random() * CONF_COLS.length)];
+          c.style.setProperty("--dur", (7 + Math.random() * 4) + "s");
+          c.style.setProperty("--spin", (1.2 + Math.random() * 2) + "s");
+          c.style.setProperty("--y", (Math.random() * 80 - 40) + "px");
+          
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 12000);
+        }, i * 30);
+      }
+    }
+
+    // ---- Partículas de fondo ----
+    function crearParticula() {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = (15 + Math.random() * 10) + "s";
+      p.style.animationDelay = Math.random() * 2 + "s";
+      
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 25000);
+    }
+    
+    // Crear partículas periódicamente
+    setInterval(crearParticula, 3000);
+
+    // ---- Corazones/emojis flotantes mejorados ----
+    const FLOAT_EMOJIS = ["🥳", "✨", "🎊", "🌟", "💫"];
+    
+    function corazonSuave() {
+      const h = document.createElement("div");
+      h.textContent = FLOAT_EMOJIS[Math.floor(Math.random() * FLOAT_EMOJIS.length)];
+      h.style.position = "fixed";
+      h.style.fontSize = (20 + Math.random() * 16) + "px";
+      h.style.left = (5 + Math.random() * 90) + "vw";
+      h.style.top = "110vh";
+      h.style.opacity = 0.9;
+      h.style.filter = "drop-shadow(0 4px 8px rgba(0,0,0,0.3))";
+      h.style.zIndex = "15";
+      
+      const dur = 6000 + Math.random() * 4000;
+      const start = performance.now();
+      
+      (function anim() {
+        const t = (performance.now() - start) / dur;
+        const y = 110 - t * 140;
+        const xWobble = Math.sin(t * 8) * 3;
+        const scale = 1 + Math.sin(t * 10) * 0.1;
+        
+        h.style.transform = `translate(${xWobble}px, -${y}vh) scale(${scale})`;
+        
+        if (t < 1) {
+          requestAnimationFrame(anim);
+        } else {
+          h.remove();
+        }
+      })();
+      
+      document.body.appendChild(h);
+    }
+
+    // ---- Efectos iniciales ----
+    setTimeout(() => {
+      rachaGlobos(180, 3000);
+      setTimeout(() => lanzarConfeti(200), 400);
+    }, 500);
+    
+    // Corazones continúos
+    setInterval(corazonSuave, 800);
+
+    // ---- Event listeners para botones ----
+    document.getElementById('confettiBtn').addEventListener('click', () => {
+      lanzarConfeti(180);
+    });
+    
+    document.getElementById('balloonBtn').addEventListener('click', () => {
+      rachaGlobos(250, 3500);
+    });
+    
+    // ---- Efecto de click en cualquier parte ----
+    document.addEventListener('click', (e) => {
+      if (!e.target.matches('button')) {
+        // Crear pequeña explosión de confeti en el punto de click
+        for (let i = 0; i < 15; i++) {
+          const c = document.createElement("div");
+          c.className = "confetti";
+          c.style.width = "8px";
+          c.style.height = "10px";
+          c.style.left = e.clientX + "px";
+          c.style.top = e.clientY + "px";
+          c.style.background = CONF_COLS[Math.floor(Math.random() * CONF_COLS.length)];
+          c.style.setProperty("--dur", "3s");
+          c.style.setProperty("--spin", "1s");
+          c.style.setProperty("--y", "0px");
+          
+          // Movimiento radial desde el punto de click
+          const angle = (i / 15) * Math.PI * 2;
+          const velocity = 100 + Math.random() * 100;
+          const vx = Math.cos(angle) * velocity;
+          const vy = Math.sin(angle) * velocity;
+          
+          c.style.animation = `clickBurst 2s ease-out forwards`;
+          c.style.setProperty("--vx", vx + "px");
+          c.style.setProperty("--vy", vy + "px");
+          
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 2000);
+        }
+      }
+    });
+    
+    // Keyframe para el efecto de click
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes clickBurst {
+        from {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translate(var(--vx), var(--vy)) scale(0.5);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
